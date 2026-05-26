@@ -34,3 +34,17 @@
 
     expect(actual_alert_text).to eq(string)  
   end
+
+  When('I click the {string} close icon on the modal') do |string|
+    sleep 0.5
+    find('#exampleModal > div > div > div.modal-header > button').click
+  end
+
+Then('the modal should no longer be visible') do
+    expect(page).to have_no_css('#exampleModal > div > div',visible: true)
+  end
+
+When('I click the {string} button on the modal') do |string|
+    sleep 0.5
+    find('#exampleModal > div > div > div.modal-footer > button.btn.btn-secondary').click
+  end
