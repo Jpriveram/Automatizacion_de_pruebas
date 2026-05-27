@@ -2,9 +2,10 @@ begin require 'rspec/expectations'; rescue LoadError; require 'spec/expectations
 require 'capybara'
 require 'capybara/dsl'
 require 'capybara/cucumber'
-require 'capybara-screenshot/cucumber'
+# require 'capybara-screenshot/cucumber'
+require 'selenium-webdriver' # <-- FIX 1: Importamos explícitamente Selenium
 
-#PTravel Settings
+# PTravel Settings
 ENV['USER']="Pepazo"
 ENV['PSW']="ILoveQA"
 
@@ -20,15 +21,20 @@ class CapybaraDriverRegistrar
   # register a Selenium driver for the given browser to run on the localhost
   def self.register_selenium_driver(browser)
     Capybara.register_driver :selenium do |app|
-      Capybara::Selenium::Driver.new(app, :browser => browser)
+      
+      # <-- FIX 2: Usamos ::Selenium para buscar en el scope global
+      options = ::Selenium::WebDriver::Chrome::Options.new
+      options.add_argument('--log-level=3') 
+      options.add_argument('--silent')      
+      
+      Capybara::Selenium::Driver.new(app, :browser => browser, options: options)
     end
   end
-
 end
+
 # Register various Selenium drivers
 #CapybaraDriverRegistrar.register_selenium_driver(:internet_explorer)
 #CapybaraDriverRegistrar.register_selenium_driver(:firefox)
 CapybaraDriverRegistrar.register_selenium_driver(:chrome)
 Capybara.run_server = false
 #World(Capybara)
-
