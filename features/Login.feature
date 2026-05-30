@@ -32,11 +32,20 @@ Scenario: Verify the Log in modal closes correctly after clicking the "x"
     Then I should see a browser alert saying "Please fill out Username and Password."
 
 @login1 @positive
-  Scenario: Verify successful login with valid credentials
+  Scenario Outline: Verify successful logout with multiple users
     And I click the "Log in" button in the navigation bar
     And I should see a modal with the title "Log in"
     When I fill out the login form with the following credentials:
-      | Username | test |
-      | Password | test |
+      | Username | <username> |
+      | Password | <password> |
     And I click the "Log in" button on the modal
-    Then I should see the text "Welcome test" in the top right corner
+    And I should see the text "Welcome <username>" in the top right corner
+    When I click the "Log out" button in the navigation bar
+    Then I should not see the text "Welcome <username>" in the top right corner
+    And I should see the "Log in" button in the navigation bar
+
+    Examples: 
+      | username | password |
+      | test     | test     |
+      | prueba   | prueba   |
+      | juan     | juan     |
