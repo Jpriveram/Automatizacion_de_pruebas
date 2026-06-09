@@ -3,7 +3,9 @@ require 'capybara'
 require 'capybara/dsl'
 require 'capybara/cucumber'
 # require 'capybara-screenshot/cucumber'
-require 'selenium-webdriver' # <-- FIX 1: Importamos explícitamente Selenium
+require 'selenium-webdriver'
+
+Dir[File.join(File.dirname(__FILE__), '../pages/*.rb')].each { |file| require file }
 
 # PTravel Settings
 ENV['USER']="Pepazo"
@@ -18,15 +20,13 @@ Capybara.default_driver = :selenium
 Capybara.app_host = "https://www.demoblaze.com"
 
 class CapybaraDriverRegistrar
-  # register a Selenium driver for the given browser to run on the localhost
+  # Register a Selenium driver for the given browser to run on localhost.
   def self.register_selenium_driver(browser)
     Capybara.register_driver :selenium do |app|
-      
-      # <-- FIX 2: Usamos ::Selenium para buscar en el scope global
       options = ::Selenium::WebDriver::Chrome::Options.new
-      options.add_argument('--log-level=3') 
-      options.add_argument('--silent')      
-      
+      options.add_argument('--log-level=3')
+      options.add_argument('--silent')
+
       Capybara::Selenium::Driver.new(app, :browser => browser, options: options)
     end
   end

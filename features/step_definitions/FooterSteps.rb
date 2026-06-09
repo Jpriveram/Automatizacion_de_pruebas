@@ -1,25 +1,27 @@
 When('I navigate to the {string} page for footer validation') do |page_name|
+  home_page = HomePage.new
+
   case page_name
   when 'Home'
-    click_link('Home')
+    home_page.go_to_home
   when 'Product detail'
-    expect(page).to have_link('Samsung galaxy s6')
-    click_link('Samsung galaxy s6')
-    expect(page).to have_css('h2.name', text: 'Samsung galaxy s6')
+    expect(home_page.has_product?(HomePage::PRODUCT_DETAIL_PRODUCT)).to be true
+    home_page.open_default_product_detail
+    expect(ProductDetailPage.new.has_title?(HomePage::PRODUCT_DETAIL_PRODUCT)).to be true
   when 'Cart'
-    click_link('Cart')
-    expect(page).to have_content('Products')
+    home_page.go_to_cart
+    expect(home_page.cart_loaded?).to be true
   else
     raise "Unknown page for footer validation: #{page_name}"
   end
 end
 
 Then('I should see the Demoblaze footer with the following sections:') do |table|
-  expect(page).to have_css('#footc', visible: true)
+  footer = FooterComponent.new
 
-  footer = find('#footc', visible: true)
+  expect(footer.visible?).to be true
   table.hashes.each do |row|
-    expect(footer).to have_content(row['Section'])
-    expect(footer).to have_content(row['Expected text'])
+    expect(footer.has_text?(row['Section'])).to be true
+    expect(footer.has_text?(row['Expected text'])).to be true
   end
 end
