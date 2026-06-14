@@ -1,8 +1,3 @@
-When('I select the product {string} using CSS selector {string}') do |_product_name, css_selector|
-  find(:css, css_selector).click
-  sleep 2
-end
-
 Then('I should see the product name {string} on the product page') do |product_name|
   expect(page).to have_css('h2.name', text: product_name)
 end
@@ -12,8 +7,8 @@ Then('I should see the product price and description on the product page') do
   expect(page).to have_css('#more-information p')
 end
 
-When('I click the {string} button using XPath {string}') do |_button_name, xpath|
-  find(:xpath, xpath).click
+When('I add the product to the cart') do
+  click_link('Add to cart')
   sleep 1
 end
 
@@ -25,18 +20,30 @@ When('I accept the browser alert saying {string}') do |expected_text|
   sleep 1
 end
 
-When('I navigate to the Cart using CSS selector {string}') do |css_selector|
-  find(:css, css_selector).click
+When('I go to the cart') do
+  click_link('Cart')
   sleep 2
 end
 
-When('I navigate to the Cart using XPath {string}') do |xpath|
-  find(:xpath, xpath).click
-  sleep 2
+When('I start the checkout') do
+  click_button('Place Order')
+  sleep 1
 end
 
-When('I delete the product using CSS selector {string}') do |css_selector|
-  find(:css, css_selector).click
+When('I confirm the purchase') do
+  click_button('Purchase')
+  sleep 1
+end
+
+When('I accept the purchase confirmation') do
+  click_button('OK')
+  sleep 1
+end
+
+When('I delete the product {string} from the cart') do |product_name|
+  within('tr', text: product_name) do
+    click_link('Delete')
+  end
   sleep 2
 end
 
