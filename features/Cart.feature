@@ -69,3 +69,17 @@ Scenario: Complete a full end-to-end purchase from product selection to confirma
   And I should see the purchase summary contains the name "Reynaldo"
   When I click the "OK" button on the confirmation modal
   Then I should be redirected back to the Demoblaze homepage
+
+@purchase @positive @e2e @multiple
+Scenario: Add multiple products and verify the cart total is the sum of their prices
+  When I click on the product "Samsung galaxy s6"
+  And I add the displayed product price to the expected total
+  And I tap the "Add to cart" button
+  And I accept the browser alert saying "Product added"
+  And I browse to the Demoblaze homepage
+  And I click on the product "Nokia lumia 1520"
+  And I add the displayed product price to the expected total
+  And I tap the "Add to cart" button
+  And I accept the browser alert saying "Product added"
+  And I go to the Cart
+  Then the total amount to pay should match the expected total

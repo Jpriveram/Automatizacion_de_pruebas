@@ -68,6 +68,19 @@ Then('the total amount to pay should match the product price') do
   expect(total).to eq(@product_price)
 end
 
+When('I add the displayed product price to the expected total') do
+  price = find('h3.price-container').text.strip.gsub(/[^0-9]/, '').to_i
+  @expected_total = (@expected_total || 0) + price
+  puts "Added product price: #{price} | Expected total so far: #{@expected_total}"
+end
+
+Then('the total amount to pay should match the expected total') do
+  total_text = find('#totalp').text.strip
+  total = total_text.gsub(/[^0-9]/, '').to_i
+  puts "Cart total: #{total} | Expected total: #{@expected_total}"
+  expect(total).to eq(@expected_total)
+end
+
 When('I fill out the purchase form with the following details:') do |table|
   field_ids = {
     'Name'        => 'name',
