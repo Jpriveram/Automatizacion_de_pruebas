@@ -1,5 +1,4 @@
 Given('I browse to the Demoblaze homepage') do
-  page.driver.browser.manage.window.maximize
   visit('/')
   sleep 2
 end

@@ -31,7 +31,7 @@ Scenario: Verify the Log in modal closes correctly after clicking the "x"
     When I click the "Log in" button on the modal
     Then I should see a browser alert saying "Please fill out Username and Password."
 
-@login1 @positive
+@login1 @positive @smoke
   Scenario Outline: Verify successful logout with multiple users
     And I click the "Log in" button in the navigation bar
     And I should see a modal with the title "Log in"

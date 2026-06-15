@@ -31,7 +31,7 @@ Scenario: Verify alert appears when submitting an empty sign up form
   When I click the "Sign up" button on the modal
   Then I should see a browser alert saying "Please fill out Username and Password."
 
-@signup @positive
+@signup @positive @smoke
 Scenario: Verify successful sign up with new credentials
   And I click the "Sign up" button in the navigation bar
   And I should see a modal with the title "Sign up"

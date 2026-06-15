@@ -48,7 +48,7 @@ Scenario: Attempt to place an order without filling out the purchase form
   And I tap the "Purchase" button
   Then I should see a browser alert saying "Please fill out Name and Creditcard."
 
-@purchase @positive @e2e
+@purchase @positive @e2e @smoke
 Scenario: Complete a full end-to-end purchase from product selection to confirmation
   When I click on the product "Samsung galaxy s6"
   And I note the price shown on the product page

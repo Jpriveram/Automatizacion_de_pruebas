@@ -14,7 +14,7 @@ Scenario: Verify a product detail page opens correctly
     | Description | The Samsung Galaxy S6 is powered by 1.5GHz octa-core Samsung Exynos 7420 processor |
   And I should see the "Add to cart" button on the product detail page
 
-@product_detail @outline
+@product_detail @outline @smoke
 Scenario Outline: Verify product detail information for products listed on the homepage
   When I open the detail page for product "<product>"
   Then I should see product detail title "<product>"
